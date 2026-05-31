@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--
+  Synology NAS dashboard template (self-contained, no network calls).
+  Replace every {{PLACEHOLDER}} with real values from get_overview.
+  Duplicate the .vol and disk <tr> rows per volume / disk.
+  Apply amber/red classes per the thresholds in references/dashboard_design.md.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{HOSTNAME}} — NAS Dashboard</title>
+<style>
+  :root{
+    --bg:#0f1419;--panel:#1a2129;--panel2:#222c37;--text:#e6edf3;
+    --muted:#8b98a5;--accent:#3b82f6;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:24px}
+  h1{font-size:20px;margin:0}
+  .sub{color:var(--muted);font-size:13px;margin-top:2px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600}
+  .pill.ok{background:rgba(34,197,94,.15);color:var(--ok)}
+  .pill.warn{background:rgba(245,158,11,.15);color:var(--warn)}
+  .grid{display:grid;gap:16px;margin-top:20px}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid #2a3543;border-radius:14px;padding:18px}
+  .card h2{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+  .gauge{display:flex;align-items:center;gap:16px}
+  .gauge .val{font-size:26px;font-weight:700}
+  .chips{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{background:var(--panel2);border-radius:10px;padding:10px 14px;flex:1;min-width:120px}
+  .chip .n{font-size:22px;font-weight:700}
+  .chip .l{color:var(--muted);font-size:12px}
+  .vol{margin-bottom:14px}
+  .vol .top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+  .bar{height:10px;background:var(--panel2);border-radius:6px;overflow:hidden}
+  .bar > i{display:block;height:100%;background:var(--ok);border-radius:6px}
+  .bar > i.warn{background:var(--warn)} .bar > i.bad{background:var(--bad)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid #2a3543}
+  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase}
+  .ok-t{color:var(--ok)} .bad-t{color:var(--bad)} .warn-t{color:var(--warn)}
+  footer{color:var(--muted);font-size:12px;margin-top:20px;text-align:center}
+</style>
+</head>
+<body>
+  <header style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+    <div>
+      <h1>{{MODEL}} · {{HOSTNAME}}</h1>
+      <div class="sub">{{DSM_VERSION}} · up {{UPTIME}} · {{TEMP}}°C</div>
+    </div>
+    <span class="pill ok">{{HEALTH_STATUS}}</span>
+  </header>
+
+  <div class="grid">
+    <div class="row">
+      <!-- CPU gauge -->
+      <div class="card">
+        <h2>CPU</h2>
+        <div class="gauge">
+          <svg width="84" height="84" viewBox="0 0 84 84">
+            <circle cx="42" cy="42" r="36" fill="none" stroke="#222c37" stroke-width="10"/>
+            <circle cx="42" cy="42" r="36" fill="none" stroke="var(--accent)" stroke-width="10"
+              stroke-linecap="round" transform="rotate(-90 42 42)"
+              stroke-dasharray="{{CPU_ARC}} 226"/>
+          </svg>
+          <div><div class="val">{{CPU_PCT}}%</div><div class="sub">total load</div></div>
+        </div>
+      </div>
+      <!-- Memory gauge -->
+      <div class="card">
+        <h2>Memory</h2>
+        <div class="gauge">
+          <svg width="84" height="84" viewBox="0 0 84 84">
+            <circle cx="42" cy="42" r="36" fill="none" stroke="#222c37" stroke-width="10"/>
+            <circle cx="42" cy="42" r="36" fill="none" stroke="var(--ok)" stroke-width="10"
+              stroke-linecap="round" transform="rotate(-90 42 42)"
+              stroke-dasharray="{{MEM_ARC}} 226"/>
+          </svg>
+          <div><div class="val">{{MEM_PCT}}%</div><div class="sub">{{MEM_USED_MB}} / {{MEM_TOTAL_MB}} MB</div></div>
+        </div>
+      </div>
+      <!-- Network -->
+      <div class="card">
+        <h2>Network</h2>
+        <div class="chips">
+          <div class="chip"><div class="n">{{NET_RX}}</div><div class="l">↓ KB/s</div></div>
+          <div class="chip"><div class="n">{{NET_TX}}</div><div class="l">↑ KB/s</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Storage -->
+    <div class="card">
+      <h2>Storage</h2>
+      <div class="vol">
+        <div class="top"><span>{{VOL_ID}}</span><span>{{VOL_USED_GB}} / {{VOL_TOTAL_GB}} GB · {{VOL_PCT}}%</span></div>
+        <div class="bar"><i style="width:{{VOL_PCT}}%"></i></div>
+      </div>
+      <!-- duplicate .vol per volume -->
+    </div>
+
+    <div class="row">
+      <!-- Disks -->
+      <div class="card">
+        <h2>Disks</h2>
+        <table>
+          <tr><th>Disk</th><th>Temp</th><th>Status</th><th>S.M.A.R.T.</th></tr>
+          <tr><td>{{DISK_ID}}</td><td>{{DISK_TEMP}}°C</td><td>{{DISK_STATUS}}</td><td class="ok-t">{{DISK_SMART}}</td></tr>
+          <!-- duplicate per disk -->
+        </table>
+      </div>
+      <!-- Workloads -->
+      <div class="card">
+        <h2>Workloads</h2>
+        <div class="chips">
+          <div class="chip"><div class="n">{{PKG_RUNNING}}/{{PKG_TOTAL}}</div><div class="l">packages</div></div>
+          <div class="chip"><div class="n">{{CONT_RUNNING}}/{{CONT_TOTAL}}</div><div class="l">containers</div></div>
+          <div class="chip"><div class="n">{{VM_RUNNING}}/{{VM_TOTAL}}</div><div class="l">VMs</div></div>
+          <div class="chip"><div class="n">{{DOWNLOADS}}</div><div class="l">downloads</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Generated {{TIMESTAMP}} · Source: Synology MCP</footer>
+</body>
+</html>

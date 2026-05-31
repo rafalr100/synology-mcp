@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "synology": {
+      "command": "/absolute/path/to/synology-mcp/.venv/bin/python",
+      "args": ["-m", "synology_mcp"],
+      "env": {
+        "PYTHONPATH": "/absolute/path/to/synology-mcp",
+        "SYNOLOGY_URL": "http://192.168.1.100:5000",
+        "SYNOLOGY_USER": "your_username",
+        "SYNOLOGY_PASS": "your_password",
+        "SYNOLOGY_DEVICE_ID": "your_device_token_if_2fa"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest a new tool or capability
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to be able to do?
+      description: Describe the capability and the DSM feature / API it would use.
+    validations:
+      required: true
+  - type: input
+    id: api
+    attributes:
+      label: Relevant DSM API (if known)
+      placeholder: "e.g. SYNO.Core.Share.Snapshot"
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
