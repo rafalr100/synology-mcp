@@ -118,7 +118,7 @@ session, and re-authenticates automatically when it expires.
 
 ```bash
 # 1. Clone
-git clone https://github.com/OWNER/synology-mcp.git
+git clone https://github.com/rafalr100/synology-mcp.git
 cd synology-mcp
 
 # 2. Install (uv recommended)

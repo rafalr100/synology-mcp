@@ -23,8 +23,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/OWNER/synology-mcp"
-Issues = "https://github.com/OWNER/synology-mcp/issues"
+Homepage = "https://github.com/rafalr100/synology-mcp"
+Issues = "https://github.com/rafalr100/synology-mcp/issues"
 
 [project.scripts]
 synology-mcp = "synology_mcp.server:main"

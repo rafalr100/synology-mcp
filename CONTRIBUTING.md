@@ -5,7 +5,7 @@ Thanks for your interest in improving the Synology MCP Server!
 ## Getting set up
 
 ```bash
-git clone https://github.com/OWNER/synology-mcp.git
+git clone https://github.com/rafalr100/synology-mcp.git
 cd synology-mcp
 uv venv --python 3.12 .venv
 uv pip install --python .venv -e .

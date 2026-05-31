@@ -26,4 +26,4 @@ All notable changes to this project are documented here. The format is based on
 - Refactored into a modular, config-driven package (`config.py`, `api.py`, `app.py`,
   `tools/`). No hard-coded credentials.
 
-[0.2.0]: https://github.com/OWNER/synology-mcp/releases/tag/v0.2.0
+[0.2.0]: https://github.com/rafalr100/synology-mcp/releases/tag/v0.2.0
