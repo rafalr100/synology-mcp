@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Import & tool-registration check
+        run: |
+          python -c "
+          from synology_mcp import tools
+          from synology_mcp.app import mcp
+          import asyncio
+          n = len(asyncio.run(mcp.list_tools()))
+          print(f'Registered {n} tools')
+          assert n >= 60, f'expected >= 60 tools, got {n}'
+          "
+
+      - name: Byte-compile
+        run: python -m compileall synology_mcp
