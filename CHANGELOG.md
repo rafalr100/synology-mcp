@@ -4,6 +4,17 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0]
+
+### Added
+- **Surveillance Station:** `get_surveillance_info`, `list_cameras`.
+- **Synology Photos:** `list_photo_albums`.
+- **Synology Drive:** `list_drive_connections`.
+- **Time & region:** `get_time_settings` (timezone, NTP).
+- **Resource history:** `get_resource_history` (Resource Monitor threshold events) for
+  plotting trends in dashboards.
+- Tool count is now **71 across 21 domains**.
+
 ## [0.2.0]
 
 ### Added
@@ -26,4 +37,5 @@ All notable changes to this project are documented here. The format is based on
 - Refactored into a modular, config-driven package (`config.py`, `api.py`, `app.py`,
   `tools/`). No hard-coded credentials.
 
+[0.3.0]: https://github.com/rafalr100/synology-mcp/releases/tag/v0.3.0
 [0.2.0]: https://github.com/rafalr100/synology-mcp/releases/tag/v0.2.0

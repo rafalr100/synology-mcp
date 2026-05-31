@@ -10,12 +10,12 @@
 [![MCP](https://img.shields.io/badge/protocol-MCP-7c3aed)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![DSM](https://img.shields.io/badge/DSM-7.x-orange)](https://www.synology.com/dsm)
-[![Tools](https://img.shields.io/badge/tools-65-3b82f6)](docs/TOOLS.md)
+[![Tools](https://img.shields.io/badge/tools-71-3b82f6)](docs/TOOLS.md)
 
 </div>
 
 A [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that gives an
-LLM client such as **Claude** **65 tools** to monitor and manage a **Synology DSM 7**
+LLM client such as **Claude** **71 tools** to monitor and manage a **Synology DSM 7**
 NAS: system health, storage and disks, files, Docker, virtual machines, packages, DSM
 updates, Download Station, Hyper Backup, users, services, security, certificates and
 more — plus a one-call snapshot for rendering **beautiful dashboards** as artifacts.
@@ -81,7 +81,7 @@ NAS, connect your client, and ask in natural language.
 ```mermaid
 flowchart LR
     U["👤 You"] -->|natural language| C["🤖 Claude<br/>(MCP client)"]
-    C -->|tool call| S["⚙️ Synology MCP server<br/>65 tools"]
+    C -->|tool call| S["⚙️ Synology MCP server<br/>71 tools"]
     S -->|HTTPS entry.cgi| D["🟦 Synology DSM 7 API"]
     D --> N["🗄️ Your NAS<br/>storage · docker · vms · users …"]
     N -->|JSON| S
@@ -96,13 +96,14 @@ session, and re-authenticates automatically when it expires.
 
 ## Features
 
-- **65 tools** across 18 domains — see the full [Tool Reference](docs/TOOLS.md).
+- **71 tools** across 21 domains — see the full [Tool Reference](docs/TOOLS.md).
 - **Monitoring:** system info, CPU/RAM/network load, health, connections, processes.
 - **Storage:** volumes, storage pools, per-disk S.M.A.R.T. and temperatures.
 - **Files:** browse, search, info, directory size, MD5, create/rename/copy/move/delete,
   extract archives, public share links.
 - **Apps:** Docker (containers, images, projects, logs, live stats, start/stop/restart),
-  Virtual Machine Manager, Download Station, Hyper Backup, Task Scheduler.
+  Virtual Machine Manager, Download Station, Hyper Backup, Task Scheduler,
+  Surveillance Station (cameras), Synology Photos and Synology Drive.
 - **Administration:** packages & DSM updates, users/groups, shared folders (create/delete),
   file services (SMB/AFP/NFS/FTP), SSH/SNMP, hardware/UPS, security, certificates, DDNS,
   QuickConnect, notifications, logs, security scan.
@@ -305,19 +306,22 @@ More in [examples/prompts.md](examples/prompts.md).
 
 ## Tool reference
 
-All **65 tools** are documented — with parameters and what each returns — in
+All **71 tools** are documented — with parameters and what each returns — in
 **[docs/TOOLS.md](docs/TOOLS.md)**. Summary by domain:
 
 | Domain | Tools |
 |--------|-------|
 | Dashboard | `get_overview` |
-| System monitoring | `get_system_info`, `get_resource_usage`, `get_network_info` |
-| Health & activity | `get_system_health`, `get_active_connections`, `list_processes` |
+| System monitoring | `get_system_info`, `get_resource_usage`, `get_network_info`, `get_resource_history` |
+| Health & activity | `get_system_health`, `get_active_connections`, `list_processes`, `get_time_settings` |
 | Storage | `get_storage_info`, `get_storage_pools`, `get_disk_info` |
 | Files | `list_shares`, `list_files`, `get_file_info`, `get_directory_size`, `get_file_md5`, `search_files`, `create_folder`, `rename_item`, `copy_move_item`, `delete_item`, `extract_archive`, `create_share_link` |
 | Packages & updates | `check_dsm_update`, `list_packages`, `set_package_state` |
 | Docker | `list_containers`, `get_container_logs`, `get_container_stats`, `list_docker_projects`, `list_docker_images`, `set_container_state` |
 | Virtual machines | `list_virtual_machines`, `set_vm_state` |
+| Surveillance Station | `get_surveillance_info`, `list_cameras` |
+| Synology Photos | `list_photo_albums` |
+| Synology Drive | `list_drive_connections` |
 | Download Station | `list_downloads`, `add_download`, `manage_download` |
 | Backup | `list_backup_tasks`, `run_backup_task` |
 | Task Scheduler | `list_scheduled_tasks`, `run_scheduled_task` |

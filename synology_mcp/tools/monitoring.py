@@ -60,6 +60,23 @@ async def get_resource_usage() -> str:
 
 
 @mcp.tool()
+async def get_resource_history(limit: int = 25) -> str:
+    """
+    Get recent Resource Monitor threshold events (CPU/RAM/IO spikes over time).
+
+    Useful for plotting recent trends or spotting recurring load problems.
+
+    Args:
+        limit: Max events to return (default 25)
+    """
+    data = check(await api.call("SYNO.ResourceMonitor.Log", "list", version=1))
+    logs = data.get("logs", [])[:limit]
+    events = [{"time": e.get("time"), "level": e.get("level"), "event": e.get("event")}
+              for e in logs]
+    return fmt({"total": data.get("total", len(events)), "events": events})
+
+
+@mcp.tool()
 async def get_network_info() -> str:
     """Get network interfaces with IP addresses, link speed and status, plus gateway/DNS."""
     core = check(await api.call("SYNO.Core.Network", "get", version=1))

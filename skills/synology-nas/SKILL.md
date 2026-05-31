@@ -40,6 +40,10 @@ overviews; use specific tools for detail or actions.
 | Packages & DSM updates | `list_packages`, `check_dsm_update`, `set_package_state` |
 | Docker | `list_containers`, `get_container_logs`, `get_container_stats`, `list_docker_images`, `list_docker_projects`, `set_container_state` |
 | Virtual machines | `list_virtual_machines`, `set_vm_state` |
+| Surveillance Station | `get_surveillance_info`, `list_cameras` |
+| Synology Photos | `list_photo_albums` |
+| Synology Drive | `list_drive_connections` |
+| Time & resource history | `get_time_settings`, `get_resource_history` |
 | Download Station | `list_downloads`, `add_download`, `manage_download` |
 | Backup | `list_backup_tasks`, `run_backup_task` |
 | Scheduled tasks | `list_scheduled_tasks`, `run_scheduled_task` |

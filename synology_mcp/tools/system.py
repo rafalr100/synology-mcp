@@ -42,6 +42,18 @@ async def get_active_connections() -> str:
 
 
 @mcp.tool()
+async def get_time_settings() -> str:
+    """Get the NAS time, timezone and NTP synchronization settings."""
+    data = check(await api.call("SYNO.Core.Region.NTP", "get", version=1))
+    return fmt({
+        "current_time": (data.get("now") or "").strip(),
+        "timezone": data.get("timezone"),
+        "ntp_enabled": bool(data.get("enable_ntp")),
+        "ntp_server": data.get("server") or None,
+    })
+
+
+@mcp.tool()
 async def list_processes(top: int = 15, sort_by: str = "cpu") -> str:
     """
     List top running processes by CPU or memory usage.

@@ -1,17 +1,20 @@
 # Tool Reference
 
-The Synology MCP server exposes **65 tools**. Tools tagged `control` change NAS state; tools tagged `power` are destructive and disabled unless `SYNOLOGY_ENABLE_POWER_CONTROL=true`.
+The Synology MCP server exposes **71 tools**. Tools tagged `control` change NAS state; tools tagged `power` are destructive and disabled unless `SYNOLOGY_ENABLE_POWER_CONTROL=true`.
 
 ## Contents
 
 - [Dashboard](#dashboard) (1)
-- [System Monitoring](#system-monitoring) (3)
-- [System Health & Activity](#system-health-activity) (3)
+- [System Monitoring](#system-monitoring) (4)
+- [System Health & Activity](#system-health-activity) (4)
 - [Storage](#storage) (3)
 - [Files](#files) (12)
 - [Packages & DSM Updates](#packages-dsm-updates) (3)
 - [Docker / Container Manager](#docker-container-manager) (6)
 - [Virtual Machine Manager](#virtual-machine-manager) (2)
+- [Surveillance Station](#surveillance-station) (2)
+- [Synology Photos](#synology-photos) (1)
+- [Synology Drive](#synology-drive) (1)
 - [Download Station](#download-station) (3)
 - [Backup](#backup) (2)
 - [Task Scheduler](#task-scheduler) (2)
@@ -46,6 +49,18 @@ Get network interfaces with IP addresses, link speed and status, plus gateway/DN
 **Parameters:** none
 
 **Returns:** Hostname, gateway, primary/secondary DNS, and a list of interfaces with IP, mask, type, link speed and status.
+
+### `get_resource_history`
+
+Get recent Resource Monitor threshold events (CPU/RAM/IO spikes over time).
+
+**Parameters**
+
+| Name | Type | Required | Default |
+|------|------|----------|---------|
+| `limit` | integer | no | `25` |
+
+**Returns:** Recent Resource Monitor threshold events (time, level, description) for plotting trends.
 
 ### `get_resource_usage`
 
@@ -82,6 +97,14 @@ Get overall system health: status, uptime, reboot-required flag and fan status.
 **Parameters:** none
 
 **Returns:** Overall status (e.g. `system_ok`), uptime, reboot-required flag, fan status and disk-temperature alarm.
+
+### `get_time_settings`
+
+Get the NAS time, timezone and NTP synchronization settings.
+
+**Parameters:** none
+
+**Returns:** Current NAS time, timezone, and whether NTP sync is enabled plus the NTP server.
 
 ### `list_processes`
 
@@ -411,6 +434,55 @@ Power a virtual machine on or off.
 | `action` | string | yes |  |
 
 **Returns:** Confirmation of poweron/poweroff/shutdown/restart on a VM.
+
+## Surveillance Station
+
+Cameras and Surveillance Station info.
+
+### `get_surveillance_info`
+
+Get Surveillance Station info: version, camera count and licence usage.
+
+**Parameters:** none
+
+**Returns:** Surveillance Station version, cameras in use, licences and max camera support.
+
+### `list_cameras`
+
+List Surveillance Station cameras with model, IP and status.
+
+**Parameters:** none
+
+**Returns:** Cameras with id, name, vendor, model, IP, MAC, status code and online flag.
+
+## Synology Photos
+
+Photo albums (personal space).
+
+### `list_photo_albums`
+
+List albums in Synology Photos (personal space).
+
+**Parameters**
+
+| Name | Type | Required | Default |
+|------|------|----------|---------|
+| `limit` | integer | no | `50` |
+| `offset` | integer | no | `0` |
+
+**Returns:** Albums in Synology Photos (personal space): id, name, item count, shared flag and type.
+
+## Synology Drive
+
+Drive client connections.
+
+### `list_drive_connections`
+
+List Synology Drive client connections (devices syncing with the NAS).
+
+**Parameters:** none
+
+**Returns:** Synology Drive client connections: client name, IP, type, version, status, location, login and last-auth times.
 
 ## Download Station
 
