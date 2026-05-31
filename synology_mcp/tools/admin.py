@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 from .. import api
 from ..app import check, fmt, mcp, ts
 
@@ -89,7 +87,7 @@ async def delete_shared_folder(name: str) -> str:
 
 
 @mcp.tool()
-async def get_system_logs(limit: int = 30, level: Optional[str] = None) -> str:
+async def get_system_logs(limit: int = 30, level: str | None = None) -> str:
     """
     Get recent system log entries.
 

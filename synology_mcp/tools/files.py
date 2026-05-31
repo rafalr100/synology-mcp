@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Optional
 
 from .. import api
 from ..app import check, fmt, mcp, ts
@@ -35,7 +34,7 @@ async def list_files(
     offset: int = 0,
     sort_by: str = "name",
     sort_direction: str = "asc",
-    pattern: Optional[str] = None,
+    pattern: str | None = None,
 ) -> str:
     """
     List files and folders at a given path.
@@ -297,7 +296,7 @@ async def extract_archive(archive_path: str, dest_folder: str) -> str:
 
 
 @mcp.tool()
-async def create_share_link(path: str, password: Optional[str] = None) -> str:
+async def create_share_link(path: str, password: str | None = None) -> str:
     """
     Create a public sharing link for a file or folder. [control]
 
@@ -310,5 +309,6 @@ async def create_share_link(path: str, password: Optional[str] = None) -> str:
         path=path, password=password,
     ))
     links = data.get("links", [])
-    return fmt({"links": [{"path": l.get("path"), "url": l.get("url"),
-                           "link_id": l.get("id"), "error": l.get("error")} for l in links]})
+    return fmt({"links": [{"path": lnk.get("path"), "url": lnk.get("url"),
+                           "link_id": lnk.get("id"), "error": lnk.get("error")}
+                          for lnk in links]})

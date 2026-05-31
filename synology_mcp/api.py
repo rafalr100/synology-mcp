@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any, Optional
+from typing import Any
 
 import httpx
 
@@ -20,8 +20,8 @@ from . import config
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 
-_session_id: Optional[str] = None
-_client: Optional[httpx.AsyncClient] = None
+_session_id: str | None = None
+_client: httpx.AsyncClient | None = None
 
 # Synology SYNO.API.Auth error codes → human-readable hints.
 _AUTH_ERRORS = {

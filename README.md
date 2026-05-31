@@ -11,6 +11,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![DSM](https://img.shields.io/badge/DSM-7.x-orange)](https://www.synology.com/dsm)
 [![Tools](https://img.shields.io/badge/tools-71-3b82f6)](docs/TOOLS.md)
+[![CI](https://github.com/rafalr100/synology-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/rafalr100/synology-mcp/actions/workflows/ci.yml)
 
 </div>
 

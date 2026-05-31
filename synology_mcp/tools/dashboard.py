@@ -11,7 +11,7 @@ from __future__ import annotations
 import asyncio
 
 from .. import api
-from ..app import check, fmt, fmt_uptime, mcp
+from ..app import fmt, fmt_uptime, mcp, ttl_cache
 
 
 async def _safe(api_name, method, version=1, **kw):
@@ -23,6 +23,7 @@ async def _safe(api_name, method, version=1, **kw):
 
 
 @mcp.tool()
+@ttl_cache(3.0)
 async def get_overview() -> str:
     """
     Get a complete NAS snapshot in one call — ideal for building a dashboard.

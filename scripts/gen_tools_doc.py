@@ -131,12 +131,22 @@ def short_desc(desc: str) -> str:
     return line
 
 
-async def _collect() -> list[dict]:
-    listed = await mcp.list_tools()
+def _module_map() -> dict:
+    """Best-effort name→module map. Tolerates internal FastMCP API changes."""
     fnmap = {}
-    for name, tool in mcp._tool_manager._tools.items():
+    try:
+        tool_items = mcp._tool_manager._tools.items()  # internal, may change across SDKs
+    except Exception:
+        return fnmap
+    for name, tool in tool_items:
         fn = getattr(tool, "fn", None)
         fnmap[name] = getattr(fn, "__module__", "").split(".")[-1] if fn else ""
+    return fnmap
+
+
+async def _collect() -> list[dict]:
+    listed = await mcp.list_tools()
+    fnmap = _module_map()
     out = []
     for t in listed:
         props = (t.inputSchema or {}).get("properties", {})

@@ -4,6 +4,19 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0]
+
+### Added
+- Test suite (`tests/`) using `httpx.MockTransport` — runs in CI without a NAS.
+- `ruff` linting and `pytest` steps in CI; CI status badge in the README.
+- Friendly DSM error messages: common codes (105, 119, 403, …) now explain themselves
+  instead of surfacing a bare number.
+- Short TTL cache on `get_overview` so dashboard rendering doesn't repeat identical calls.
+
+### Changed
+- LICENSE holder set to the GitHub handle (no personal name).
+- `scripts/gen_tools_doc.py` no longer hard-depends on FastMCP internals.
+
 ## [0.3.0]
 
 ### Added
@@ -37,5 +50,6 @@ All notable changes to this project are documented here. The format is based on
 - Refactored into a modular, config-driven package (`config.py`, `api.py`, `app.py`,
   `tools/`). No hard-coded credentials.
 
+[0.4.0]: https://github.com/rafalr100/synology-mcp/releases/tag/v0.4.0
 [0.3.0]: https://github.com/rafalr100/synology-mcp/releases/tag/v0.3.0
 [0.2.0]: https://github.com/rafalr100/synology-mcp/releases/tag/v0.2.0
