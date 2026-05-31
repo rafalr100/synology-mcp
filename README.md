@@ -116,6 +116,21 @@ session, and re-authenticates automatically when it expires.
 
 ## Quick start
 
+### Option A — guided setup (recommended)
+
+One interactive script creates the environment, asks for your NAS details, handles 2FA,
+tests the connection and registers the server in Claude Desktop for you:
+
+```bash
+git clone https://github.com/rafalr100/synology-mcp.git
+cd synology-mcp
+python3 configure.py
+```
+
+Then fully quit and reopen Claude Desktop. That's it.
+
+### Option B — manual
+
 ```bash
 # 1. Clone
 git clone https://github.com/rafalr100/synology-mcp.git
@@ -391,6 +406,11 @@ Only where you put it — in `.env` or the client config, both local to your mac
 Yes. 2FA is optional; without it, username + password is enough.
 
 ---
+
+## Roadmap
+
+Planned additions (Surveillance Station, Synology Photos & Drive, richer logs, time/NTP,
+and more) are tracked in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Contributing
 
